@@ -7,8 +7,9 @@
     <groupId>com.sonarqube.example</groupId>
     <artifactId>sonarqube-maven-example</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
-    <name>Example of basic Maven project to integrate with SonarQube</name>
+    <name>Example of basic Maven project to integrate with SonarQube, Nexus, Tomcat</name>
 
     <dependencies>
         <!-- Unit testing -->
@@ -19,6 +20,18 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <!-- Nexus Deployment Configuration -->
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <url>http://<NEXUS-HOST>:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <url>http://<NEXUS-HOST>:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <plugins>
@@ -59,6 +72,25 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Maven Deploy Plugin (for Nexus) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.1</version>
+            </plugin>
+
+            <!-- Tomcat Deployment Plugin -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <url>http://<TOMCAT-HOST>:8080/manager/text</url>
+                    <server>tomcat-server</server>
+                    <path>/sonarqube-example</path>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -83,3 +115,4 @@
         </profile>
     </profiles>
 </project>
+
