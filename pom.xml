@@ -11,10 +11,11 @@
     <name>Example of basic Maven project to integrate with SonarQube</name>
 
     <dependencies>
+        <!-- Unit testing -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -38,7 +39,7 @@
                 <version>3.9.1.2184</version>
             </plugin>
 
-            <!-- JaCoCo for coverage (Java 17 compatible) -->
+            <!-- JaCoCo for code coverage -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -68,9 +69,17 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
+                <!-- SonarQube server URL -->
                 <sonar.host.url>http://192.168.124.129:9000</sonar.host.url>
+
+                <!-- project key (must match in SonarQube UI) -->
+                <sonar.projectKey>sonarqube-maven-example</sonar.projectKey>
+                <sonar.projectName>SonarQube Maven Example</sonar.projectName>
+                <sonar.projectVersion>1.0</sonar.projectVersion>
+
+                <!-- encoding -->
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
             </properties>
         </profile>
     </profiles>
 </project>
-
